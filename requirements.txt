@@ -1,0 +1,7 @@
+# No external dependencies required for basic functionality
+# This package uses only Python standard library modules
+
+# Development dependencies (install with: pip install -r requirements-dev.txt)
+# pytest>=6.0
+# black>=21.0
+# flake8>=3.8
