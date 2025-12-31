@@ -15,7 +15,7 @@ def read_readme():
 
 setup(
     name="portfoliogen",
-    version="1.0.0",
+    version="1.0.3",
     author="Sameer Lamichhane",
     author_email="sameerlamichhane00@gmail.com",
     description="Automatic portfolio project generator",
