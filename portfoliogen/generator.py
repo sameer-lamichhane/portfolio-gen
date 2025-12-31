@@ -13,13 +13,13 @@ except ImportError:
     from importlib_resources import files
 
 
-def generate_portfolio(folder_name: str = "MyPortfolio", template: str = "default") -> str:
+def generate_portfolio(folder_name: str = "MyPortfolio", template: str = "developer") -> str:
     """
     Generate a portfolio project folder with HTML, CSS, and JS files.
     
     Args:
         folder_name (str): Name of the portfolio folder to create
-        template (str): Template type (currently only 'default' supported)
+        template (str): Template type ('developer' or 'photographer')
     
     Returns:
         str: Absolute path of the created portfolio folder
@@ -27,6 +27,11 @@ def generate_portfolio(folder_name: str = "MyPortfolio", template: str = "defaul
     Raises:
         OSError: If folder creation fails
     """
+    # Validate template
+    valid_templates = ["developer", "photographer"]
+    if template not in valid_templates:
+        raise ValueError(f"Invalid template '{template}'. Available templates: {', '.join(valid_templates)}")
+    
     # Get absolute path for the portfolio folder
     portfolio_path = Path.cwd() / folder_name
     
@@ -80,7 +85,7 @@ def _get_template_content(template: str, filename: str) -> str:
     Read template content from source files.
     
     Args:
-        template (str): Template type (e.g., 'default')
+        template (str): Template type (e.g., 'developer', 'photographer')
         filename (str): Template filename (e.g., 'index.html')
     
     Returns:
@@ -105,9 +110,7 @@ def _get_template_content(template: str, filename: str) -> str:
                 with open(template_file, 'r', encoding='utf-8') as f:
                     return f.read()
             else:
-                # Fallback to hardcoded templates if file doesn't exist
-                return _get_fallback_template(filename)
+                raise FileNotFoundError(f"Template file not found: {template}/{filename}")
                 
     except Exception as e:
-        print(f"Warning: Could not read template {filename}, using fallback. Error: {e}")
-        return _get_fallback_template(filename)
+        raise FileNotFoundError(f"Could not read template {template}/{filename}: {e}")
